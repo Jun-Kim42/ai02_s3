@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block alert %}
+{% if alert_msg %}
+<div class="alert alert-{{ alert_msg.type }}" role="alert">
+  {{ alert_msg.msg }}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block title %}
+Current Weather Update
+{% endblock %}
+
+{% block lead %}
+현재 상태를 기록해주세요.
+{% endblock %}
+
+{% block main_body %}
+<a class="btn btn-secondary", href='/api/weather_update/1'>
+I'm Running!
+</a>
+<a class="btn btn-secondary", href='/api/weather_update/0'>
+I'm Walking!
+</a>
+
+{% if weather_list %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">temp</th>
+      <th scope="col">feels_like</th>
+      <th scope="col">pressure</th>
+      <th scope="col">humidity</th>
+      <th scope="col">wind_speed</th>
+      <th scope="col">wind_degree</th>
+      <th scope="col">label</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for weather in weather_list %}
+    <tr>
+      <th scope="row">{{ weather.id }}</th>
+      <td>{{ weather.temp }}</td>
+      <td>{{ weather.feels_like }}</td>
+      <td>{{ weather.pressure }}</td>
+      <td>{{ weather.humidity }}</td>
+      <td>{{ weather.speed }}</td>
+      <td>{{ weather.deg }}</td>
+      <td>{{ weather.label }}</td>
+      <td>
+        <a class="btn btn-secondary", href='/api/weather_update/del/{{ weather.id }}'>
+          Delete
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% endblock %}
